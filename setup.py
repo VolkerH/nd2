@@ -7,8 +7,8 @@ from numpy import get_include
 from setuptools import Extension, setup
 
 SYSTEM = platform.system()
-SDK = Path("src/sdk") / SYSTEM
-LIB = SDK / "lib"
+SDK = (Path("src/sdk") / SYSTEM).resolve()
+LIB = (SDK / "lib")
 INCLUDE = SDK / "include"
 LINK = "shared" if SYSTEM == "Linux" else "static"
 
@@ -36,7 +36,7 @@ sdk = Extension(
     # ],
 )
 
-
+print("library dirs", str(LIB))
 setup(
     use_scm_version={"write_to": "src/nd2/_version.py"},
     ext_modules=cythonize(
